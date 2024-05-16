@@ -1,0 +1,55 @@
+server:
+  port: 9030
+
+#Actuator configuration
+info:
+  app:
+    name: Client Service OpenFeign
+    description: Cliente con OpenFeign
+    version: 0.0.1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        base-path: /actuator
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      product-service-cb:
+        slidingWindowSize: 12
+        failureRateThreshold: 40
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 8
+        slowCallRateThreshold: 20
+        slowCallDurationThreshold: 500ms
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+      user-service-cb:
+        slidingWindowSize: 12
+        failureRateThreshold: 40
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 8
+        slowCallRateThreshold: 20
+        slowCallDurationThreshold: 500ms
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+    instances:
+      mitocode-product: # Nombre a mapear dentro del @CircuitBreaker
+        base-config: product-service-cb
+      mitocode-user:
+        base-config: user-service-cb      
+
+
+  timelimiter:
+    configs:
+      product-service-tl:
+        timeoutDuration: 1s
+    instances:
+      mitocode-product-tl:
+        base-config: product-service-tl
+
+
+
+
+
