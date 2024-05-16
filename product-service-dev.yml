@@ -21,8 +21,8 @@ spring:
     url: ${POSTGRESQL.URL.CONNECTION:jdbc:postgresql://localhost:5432/mitocode}
     username: mitocode
     password: mitocode
-#hibernate:
-  #dialect: org.hibernate.dialect.PostgreSQLDialect
+hibernate:
+  dialect: org.hibernate.dialect.PostgreSQLDialect
 
 #Actuator configuration
 info:
